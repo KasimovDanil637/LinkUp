@@ -1,0 +1,112 @@
+<template>
+  <div class="wrapper">
+    <div class="header">
+      <div class="header-text">Уведомления</div>
+      <div class="line"></div>
+      <div class="header-wrapper">
+        <div v-if="flag"
+                class="button"
+                :key="index"
+                v-for="(item, index) in data">
+          <button class="btn-view" @click="checkInvite(item.friend.username)">Профиль</button>
+          <InviteItemComponent :key="index" :data="item"/>
+        </div>
+        <div class="nothing" v-if="data.length === 0">
+          Список уведомлений пуст
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import InviteItemComponent from "@/components/InviteItemComponent.vue";
+import {defineEmits, onMounted, reactive, ref} from "vue";
+let data = reactive(Object)
+const flag = ref(false)
+const accepted = ref(false)
+const canceled = ref(false)
+onMounted(async () => {
+  await inviteList()
+})
+const inviteList = async () => {
+  const jwt = localStorage.getItem("token")
+  let token = "Bearer " + jwt;
+
+  try {
+    const response = await fetch('http://localhost:8090/invite/list', {
+      method: 'GET',
+      headers: {
+        Authorization: token
+      }
+    });
+    if (response.ok) {
+      data = await response.json()
+      flag.value = true;
+    } else {
+      console.error('Ошибка при получении данных:', response.status);
+    }
+  } catch (error) {
+    console.error('Ошибка при выполнении запроса:', error);
+  }
+}
+const emit = defineEmits(['checkInvite'])
+function checkInvite(username) {
+  emit('checkInvite', username)
+}
+</script>
+
+
+<style scoped>
+.wrapper{
+  margin-top: 10px;
+}
+.header-wrapper {
+  margin: 10px 30px;
+}
+.button {
+  width: 100%;
+  border: var(--border-1);
+  border-radius: 5px;
+  background-color: var(--block-color-1);
+  margin-bottom: 10px;
+}
+.header {
+  border: var(--border-1);
+  background-color: white;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  height: 640px;
+  width: var(--centr-size);
+}
+.btn-view {
+  background-color: var(--intr-color-2);
+  color: var(--intr-color-1);
+  border: none;
+  border-radius: 5px;
+  position: absolute;
+  //margin-left: 507px;
+  margin-left: 395px;
+  margin-top: 30px;
+  //width: 210px;
+  width: 100px;
+  height: 30px;
+}
+.header-text {
+  font-size: 22px;
+  margin-left: 50px;
+  margin-top: 30px;
+  color: var(--text-color-2);
+  margin-bottom: 20px;
+}
+.line {
+  width: 93%;
+  margin: 0 auto;
+  border: var(--border-1)
+}
+.nothing {
+  position: absolute;
+  color: var(--text-color-3);
+  margin: 220px 290px;
+}
+</style>

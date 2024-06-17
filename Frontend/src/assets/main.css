@@ -1,0 +1,37 @@
+:root {
+    --block-color-1: #ffffff;
+    --block-color-2: #f5f5f5;
+    --background-color-1: #edeef0;
+    --text-color-1: black;
+    --box-shadow-1: 1px 1px 1px rgba(0, 0, 0, 0.1);
+    --border-1: 1px solid rgba(0, 0, 0, 0.1);
+    --green-button: #8cff8c;
+    --hover-block-1: #e5e7ea;
+    --hover-block-2: #d5e8ff;
+    --hover-block-3: #f2f3f6;
+    --hover-block-4: #f8f8f8;
+    --text-color-2: #4f4f4f;
+    --text-color-3: #7C7C7C;
+    --text-color-4: #C7C7C7;
+    --text-color-5: #ff1111;
+    --text-color-6: #424242;
+    --text-color-7: #f1f1f1;
+    --intr-color-1: #2f94ff; //#2f94ff;
+    --intr-color-2: #ecf5ff;
+    --disabled-text: #c5deff;
+    --disabled-btn: #e9f2ff;
+    --left-size: 15%;
+    --centr-size: 800px;
+}
+
+
+body {
+    padding: 0;
+    margin:  0;
+    background-color: var(--background-color-1);
+}
+.router-link {
+    text-decoration: none;
+    color: black;
+}
+/*#f5f5f5*/
